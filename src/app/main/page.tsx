@@ -11,7 +11,7 @@ export default async function Users() {
 
       <Button />
       <span>
-        {data.data.map((item, index) => (
+        {data.data.map((item: any, index: number) => (
           <span key={index}>{item.name}</span>
         ))}
       </span>
