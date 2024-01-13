@@ -1,32 +1,33 @@
-'use client'
+"use client";
 
-import { sendPost } from "@/functions/send"
-import { useRouter } from "next/navigation"
-import {startTransition} from 'react'
+import { useRouter } from "next/navigation";
+import { startTransition } from "react";
 
-const obj = 
-{
-	userId: 107,
-	name: "Manoel gomes"
-}
+const obj = {
+  userId: 110,
+  name: "Hugo Fortunato",
+};
 
 export function Button() {
-  const router = useRouter()
+  const router = useRouter();
   const sendDating = async () => {
-    const res = await sendPost('/post', obj)
-    
-     startTransition(() => {
-       router.refresh();
-   });
-    
-    return res
-  }
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
+
+    startTransition(() => {
+      router.refresh();
+    });
+  };
 
   return (
     <>
-  <button onClick={sendDating}>
-    enviar
-  </button>
-  </>
-  )
+      <button onClick={sendDating}>enviar</button>
+    </>
+  );
 }
