@@ -1,24 +1,17 @@
 "use client";
-
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import Cookie from "js-cookie";
+import { sendDating } from "@/app/functions/sendDating";
 import { startTransition } from "react";
 
-const obj = {
-  userId: 110,
-  name: "Hugo Fortunato",
-};
-
-export function Button() {
+export function Button({ label }: { label: string }) {
   const router = useRouter();
-  const sendDating = async () => {
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
-      method: "POST",
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
+
+  const handleRouteValidate = async () => {
+    Cookie.set("token", "my-token");
+
+    await router.push("/main");
+    await sendDating();
 
     startTransition(() => {
       router.refresh();
@@ -27,7 +20,7 @@ export function Button() {
 
   return (
     <>
-      <button onClick={sendDating}>enviar</button>
+      <button onClick={handleRouteValidate}>{label}</button>
     </>
   );
 }

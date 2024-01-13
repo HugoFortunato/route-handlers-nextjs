@@ -33,7 +33,7 @@ export default async function Users() {
     <div className="text-center">
       <h1>Users</h1>
 
-      <Button />
+      <Button label="add nome" />
       <span style={resultStyle}>
         {result.map((item: ResultProps, index: number) => (
           <span key={index}>{item.name}</span>
